@@ -21,10 +21,6 @@ void Rmf(char *file){
 
 void Rmi(char *file){
 	char str[MAXSIZE];
-	if(access(file,F_OK)<0){	//파일이 존재하지않으면 에러를 띄운다
-		perror("rm error : ");
-		return;
-	}
 	printf("rm : remove file %s?(y/n) ",file);
 	scanf("%s",str);
 	if(strcmp(str,"y")==0 || strcmp(str,"Y")==0){
@@ -45,13 +41,13 @@ int fileCheck(char *file_name){
 
 	if ((stat(file_name, &finfo)) == -1){
    		perror("Error : ");
-   		flag=1;
+   		return 1;
    	}
    	file_mode = finfo.st_mode;
 
    	if (S_ISDIR(file_mode)){	//디렉토리면 에러
-		flag=1;
 		printf("Error: It is a directory\n");
+		return 1;
 	}
 	return flag;
 }
