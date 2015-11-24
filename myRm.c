@@ -23,7 +23,7 @@ void Rmi(char *file){
 	char str[MAXSIZE];
 	printf("rm : remove file %s?(y/n) ",file);
 	scanf("%s",str);
-	if(strcmp(str,"y")==0 || strcmp(str,"Y")==0){
+	if(str[0]=='y' || str[0]=='Y'){
 		if(unlink(file)<0)	//link지우기 실패했을때
 			perror("rm error : ");
 	}
