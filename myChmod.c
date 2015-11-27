@@ -11,13 +11,14 @@ void Chmod(char *file,int mode){
 
 int main(int argc, char **argv){
 	int i;
-	int mode=strtol(argv[1],0,8); //모드를 8진수로 받는다
+	int mode;
 
 	if(argc < 3){
 		printf("please input filename or mode number\n");
 		exit(1);
 	}
 	else{
+		mode = strtol(argv[1],0,8); //모드를 8진수로 받는다
 		for(i=2;i<argc;i++){
 			Chmod(argv[i],mode);
 		}

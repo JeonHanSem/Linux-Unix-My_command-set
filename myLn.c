@@ -37,7 +37,7 @@ int fileCheck2(char *file_name){
 int main(int argc, char **argv){
 	int flag;
 	
-    if(strcmp(argv[1],"-s")==0){
+    if(argc != 1 && strcmp(argv[1],"-s")==0){
     	if(argc < 4){
 			printf("please input filename\n");
 			exit(1);
