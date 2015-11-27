@@ -3,6 +3,23 @@
 #define MAXSIZE 100
 #define PERMS 0755
 
+int fileCheck(char *file_name){
+	struct stat finfo;	//파일의 정보를 담고있는 구조체
+	mode_t file_mode;
+	int i,flag=0;
+
+	stat(file_name, &finfo);
+   	file_mode = finfo.st_mode;
+   	if (S_ISREG(file_mode)){
+   		perror("Error");
+   		return 1;
+   	}
+   	else if (S_ISDIR(file_mode)){	//디렉토리면 에러
+		flag = 0;
+	}
+	return flag;
+}
+
 void pMkdir(char *path, char *cur){
 	int flag=0;
 	int cnt=0,i;
@@ -35,22 +52,31 @@ void pMkdir(char *path, char *cur){
 }
 
 void Mkdir(char *path, char *cur){
+	char *tmp=path;
+	int check;
 	int flag=0;
 	int cnt=0,i;
 
 	if((path=strtok(path,"/"))!=NULL){
-		if(mkdir(path,PERMS)){	//이미 디렉토리가 존재할경우 chdir을 통해 들어간다
-			cur=path;
-			while(path=strtok(NULL,"/")){	//계속해서 디렉토리를 들어가는 상황
-				chdir(cur);
-				if(mkdir(path,PERMS)==0)	//mkdir에 성공했으면 flag를 1로 바꿔준다
-					flag=1;
+		check=fileCheck(path);
+		if(check==0){
+			if(mkdir(path,PERMS)){	//이미 디렉토리가 존재할경우 chdir을 통해 들어간다
 				cur=path;
-				cnt++;
+				while(path=strtok(NULL,"/")){	//계속해서 디렉토리를 들어가는 상황
+					chdir(cur);
+					if(mkdir(path,PERMS)==0)	//mkdir에 성공했으면 flag를 1로 바꿔준다
+						flag=1;
+					cur=path;
+					cnt++;
+				}
 			}
 		}
-		else
-			flag=1;
+		else{
+			if(strcmp(tmp,path)!=0)				
+				flag=0;
+			else
+				flag=1;
+		}
 	}
 	for(i=0;i<cnt;i++)
 		chdir("..");
