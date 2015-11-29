@@ -15,7 +15,7 @@ void Touch(char *file_name){
 	if ((stat(file_name, &finfo)) == -1){
    		fmake(file_name);
    	}
-
+	//파일 최종 수정시간 변경
 	utime(file_name,NULL);
 }
 
