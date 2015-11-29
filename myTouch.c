@@ -20,10 +20,9 @@ int fileCheck(char *file_name){
    	}
    	file_mode = finfo.st_mode;
 
-   	if (S_ISDIR(file_mode)){	//디렉토리면 에러
-		flag=1;
-		printf("Error: It is a directory\n");
-	}
+   	if (S_ISDIR(file_mode))	//디렉토리면 따로 처리
+		flag=2;
+	
 	return flag;
 }
 
@@ -41,6 +40,8 @@ int main(int argc, char **argv){
 			flag=fileCheck(argv[i]);
 			if(flag==0)
 				Touch(argv[i]);
+			else if(flag==2)
+				utime(argv[i],NULL);
 		}
 	}
 	
