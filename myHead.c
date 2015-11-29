@@ -47,8 +47,8 @@ void stdHead(int n){
 	int nread,cnt=0;
 	char str[MAXSIZE];
 
-	while(gets(str)){
-		printf("%s\n", str);
+	while(fgets(str,sizeof(str),stdin)){
+		printf("%s", str);
 		if((++cnt)==n)
 			break;
 	}
