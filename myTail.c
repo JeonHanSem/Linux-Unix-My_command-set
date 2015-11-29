@@ -53,7 +53,7 @@ void stdTail(int n){
 	char str[MAXSIZE];
 	char buf[MAXSIZE][MAXSIZE];
 
-	while(gets(buf[cnt++])!=NULL){}
+	while(fgets(buf[cnt],sizeof(buf[cnt]),stdin)!=NULL){cnt++;}
 	//파일의 끝에서부터 주어진 조건인 라인까지 출력한다
 	//파일의 전체길이가 주어진 조건보다 짧은경우 전체를 다 출력하도록 하였다
 	if(cnt<n+1)	
@@ -61,7 +61,7 @@ void stdTail(int n){
 	else
 		k=cnt-n;
 	for(;k<cnt;k++){
-		printf("%s\n", buf[k-1]);
+		printf("%s", buf[k-1]);
 	}
 	exit(1);
 }
