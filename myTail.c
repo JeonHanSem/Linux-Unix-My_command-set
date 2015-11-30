@@ -1,9 +1,7 @@
 #include "header.h"
 
-#define MAXSIZE 100
-
 void Tail(char *file,int n){
-	char buf[MAXSIZE][MAXSIZE];
+	char buf[n][BUFSIZ];
 	int j=0,k;
 	FILE *fd;
 
@@ -15,7 +13,7 @@ void Tail(char *file,int n){
 	sprintf(buf[0],"file name : %s\n",file);
 	printf("%s",buf[0]);	
 	//end of file까지 읽으면서 라인수를 세어놓는다
-	while(fgets(buf[j++],sizeof(buf[j]),fd)!=NULL){}
+	while(fgets(buf[j%n],sizeof(buf[j%n]),fd)!=NULL){j++;}
 	//파일의 끝에서부터 주어진 조건인 라인까지 출력한다
 	//파일의 전체길이가 주어진 조건보다 짧은경우 전체를 다 출력하도록 하였다
 	if(j<n+1)	
@@ -23,7 +21,7 @@ void Tail(char *file,int n){
 	else
 		k=j-n;
 	for(;k<j+1;k++)
-		printf("%s", buf[k-1]);
+		printf("%s", buf[(k-1)%n]);
 	fclose(fd);
 }
 
@@ -50,10 +48,9 @@ void stdTail(int n){
 	int k,cnt=0;
 	int i;
 	int flag;
-	char str[MAXSIZE];
-	char buf[MAXSIZE][MAXSIZE];
+	char buf[n][BUFSIZ];
 
-	while(fgets(buf[cnt],sizeof(buf[cnt]),stdin)!=NULL){cnt++;}
+	while(fgets(buf[cnt%n],sizeof(buf[cnt%n]),stdin)!=NULL){cnt++;}
 	//파일의 끝에서부터 주어진 조건인 라인까지 출력한다
 	//파일의 전체길이가 주어진 조건보다 짧은경우 전체를 다 출력하도록 하였다
 	if(cnt<n+1)	
@@ -61,14 +58,12 @@ void stdTail(int n){
 	else
 		k=cnt-n;
 	for(;k<cnt;k++){
-		printf("%s", buf[k-1]);
+		printf("%s", buf[(k-1)%n]);
 	}
 	exit(1);
 }
 
 int main(int argc, char **argv){
-	char buf[MAXSIZE][MAXSIZE];
-	char str[MAXSIZE];
 	int i,j=0,n,p=0,flag;
 	FILE *fd;
 
