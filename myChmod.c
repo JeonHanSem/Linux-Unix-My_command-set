@@ -5,7 +5,6 @@
 void Chmod(char *file,int mode){
 	if(chmod(file,mode)<0){ //입력받은 모드로 파일의 권한을 변경한다
 		perror("chmod error");
-		exit(1);
 	}
 }
 
