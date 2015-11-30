@@ -1,9 +1,7 @@
 #include "header.h"
 
-#define MAXSIZE 100
-
 void Head(char *file,int n){
-	char buf[n][BUFSIZ];
+	char buf[BUFSIZ];
 	int j=0;
 	FILE *fd;
 
@@ -12,13 +10,12 @@ void Head(char *file,int n){
 		exit(1);
 	}
 	//file 이름 출력
-	sprintf(buf[0],"file name : %s\n",file);
-	printf("%s",buf[0]);	
+	printf("file name : %s\n",file);	
 	//end of file 까지 읽으면서 조건에 맞는 라인까지 출력한다
 	while(!feof(fd)){
-		fgets(buf[j],sizeof(buf[j]),fd);
-		printf("%s", buf[j++]);
-		if(j==n)
+		fgets(buf,sizeof(buf),fd);
+		printf("%s", buf);
+		if((++j)==n)
 			break;
 	}
 	fclose(fd);
@@ -45,7 +42,7 @@ int fileCheck(char *file_name){
 //파일입력이 없을시에는 stdin에서 읽어서 stdout으로 출력한다
 void stdHead(int n){
 	int nread,cnt=0;
-	char str[MAXSIZE];
+	char str[BUFSIZ];
 
 	while(fgets(str,sizeof(str),stdin)){
 		printf("%s", str);
