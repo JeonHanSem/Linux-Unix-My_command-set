@@ -3,7 +3,7 @@
 #define MAXSIZE 100
 
 void Head(char *file,int n){
-	char buf[MAXSIZE][MAXSIZE];
+	char buf[n][BUFSIZ];
 	int j=0;
 	FILE *fd;
 
